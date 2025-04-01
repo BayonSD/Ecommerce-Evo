@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Productos</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Asegúrate de que el CSS esté bien enlazado -->
+</head>
+<body>
+    <header>
+        <h1>Listado de Productos</h1>
+    </header>
+
+    <main>
+        <!-- Verificar si hay productos -->
+        <% if (productos && productos.length > 0) { %>
+            <div class="product-grid">
+                <% productos.forEach(function(producto) { %>
+                    <div class="product-card">
+                        <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
+                        <h3><%= producto.nombre %></h3>
+                        <p><%= producto.descripcion %></p>
+                        <p><%= producto.precio %> USD</p>
+                        <button>Añadir al carrito</button>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>No hay productos disponibles en este momento.</p>
+        <% } %>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 E-commerce</p>
+    </footer>
+</body>
+</html>

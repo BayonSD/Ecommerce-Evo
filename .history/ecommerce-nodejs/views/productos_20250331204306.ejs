@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listado de Productos</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Listado de Productos</h1>
+    </header>
+
+    <main>
+      <div class="productos-lista">
+        <% if (productos.length > 0) { %>
+          <% productos.forEach(producto => { %>
+            <div class="producto">
+              <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" class="producto-imagen" />
+              <h2><%= producto.nombre %></h2>
+              <p><%= producto.descripcion %></p>
+              <p><strong>Precio:</strong> $<%= producto.precio %></p>
+              <p><strong>Stock:</strong> <%= producto.stock %></p>
+              <a href="/productos/<%= producto.id %>" class="btn-ver-detalles">Ver detalles</a>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>No hay productos disponibles en este momento.</p>
+        <% } %>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 E-commerce</p>
+    </footer>
+  </body>
+</html>

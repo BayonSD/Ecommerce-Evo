@@ -1,12 +1,59 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <h1>Bienvenido a la página principal</h1>
-  <a href="/login">Iniciar sesión</a>
+    <header>
+        <h1>Bienvenido <% if (user) { %> <%= user.email %> <% } %></h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <% if (user) { %>
+                <a href="/logout">Cerrar sesión</a>
+            <% } else { %>
+                <a href="/login">Iniciar sesión</a>
+                <a href="/register">Registrarse</a>
+            <% } %>
+        </nav>
+    </header>
+    
+    <main>
+        <% if (productos.length > 0) { %>
+            <div class="productos-grid">
+                <% productos.forEach(producto => { %>
+                    <div class="producto-card">
+                        <img src="<%= producto.imagen || '/img/default.png' %>" alt="Imagen de <%= producto.nombre %>">
+                        <h3><%= producto.nombre %></h3>
+                        <p><%= producto.descripcion %></p>
+                        <p>Precio: $<%= producto.precio %></p>
+                        <p>Stock: <%= producto.stock %> unidades</p>
+                        <a href="/productos/<%= producto.id %>" class="btn-detalles">Ver Detalles</a>
+
+                        <% if (user) { %>
+                            <!-- Formulario para agregar al carrito -->
+                            <form action="/carrito/agregar" method="POST">
+                                <input type="hidden" name="producto_id" value="<%= producto.id %>">
+                                <input type="number" name="cantidad" min="1" value="1">
+                                <button type="submit" class="btn-agregar-carrito">Agregar al Carrito</button>
+                            </form>
+
+                            <!-- Formulario para agregar a la lista de deseos -->
+                            <form action="/lista-deseos/agregar" method="POST">
+                                <input type="hidden" name="producto_id" value="<%= producto.id %>">
+                                <button type="submit" class="btn-agregar-deseos">Agregar a la Lista de Deseos</button>
+                            </form>
+                        <% } else { %>
+                            <p><a href="/login">Inicia sesión para agregar al carrito y a la lista de deseos</a></p>
+                        <% } %>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>No hay productos disponibles en este momento.</p>
+        <% } %>
+    </main>
 </body>
 </html>
